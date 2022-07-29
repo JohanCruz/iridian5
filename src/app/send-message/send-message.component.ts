@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-send-message',
@@ -8,8 +9,14 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./send-message.component.css']
 })
 export class SendMessageComponent implements OnInit {
+  
   form: FormGroup;
-  constructor(public fb: FormBuilder, private httpClient: HttpClient) { 
+  alert: any;
+  constructor(public fb: FormBuilder, private apiService: ApiService) { 
+    
+  }
+
+  ngOnInit(): void {
     this.form = this.fb.group({
       firstName: [''],
       lastName: [''],
@@ -18,11 +25,11 @@ export class SendMessageComponent implements OnInit {
       contactArea: [''],
       phone: [''],
     });
+    
   }
 
-  ngOnInit(): void {
-  }
-  public submitFormMessage() {
+  public submitFormMessage(){
+    this.alert = '';
     var formData: any = new FormData();
     formData.append("firstName", this.form.get('firstName').value);
     formData.append("lastName", this.form.get('lastName').value);
@@ -30,20 +37,33 @@ export class SendMessageComponent implements OnInit {
     formData.append("email", this.form.get('email').value);
     formData.append("contactArea", this.form.get('contactArea').value);
     formData.append("phone",  this.form.get('phone').value);
-    this.httpClient.post('http://localhost:8000/api/message', formData).subscribe();
-    
-    this.form = this.fb.group({
-      firstName: [''],
-      lastName: [''],
-      message: [''],
-      email: [''],
-      contactArea: [''],
-      phone: [''],
-    });
-  
+
+    this.apiService.submitFormMessage(this.form, formData).subscribe((data)=>{
+          console.log(data);
+          this.alert = data;
+      }); 
+     
+      
+      this.form = this.fb.group({
+        firstName: [''],
+        lastName: [''],
+        message: [''],
+        email: [''],
+        contactArea: [''],
+        phone: [''],
+      });
   }
 
+   
+
 }
+
+  
+
+
+  
+
+
 
 
     

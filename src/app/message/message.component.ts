@@ -13,16 +13,17 @@ export class MessageComponent implements OnInit {
 
   
 
-  constructor(private apiService: ApiService) { 
-    
+  constructor(private apiService: ApiService) {     
   }
 
   ngOnInit() {
     this.apiService.getMessages().subscribe((data)=>{
       console.log(data);
       this.messages = data;
-    }); 
+    });  
    
-  } 
+  }
+
+  
 
 }
