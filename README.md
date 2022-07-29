@@ -1,5 +1,10 @@
 # iridian5
-- descargar y correr por consola  ng serve --open 
+- descargar y correr por consola con el comando:
+- ng serve --open 
+- el sevidor backend debe funcionar en el puerto 8000
+- éste último se puede correr con el compando:
+- php -S localhost:8000 -t public
+
 
 
 ### Features
